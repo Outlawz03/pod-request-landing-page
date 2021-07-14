@@ -6,8 +6,12 @@ const Content = () => {
   const [inError, setInError] = useState(false);
   
   const handleSubmit = event => {
-    event.preventDefault();
+    event.preventDefault();    
+    setInError((/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) ? false : true);
+  };
 
+  const handleChange = ({ target }) => {
+    setEmail(target.value);
   };
 
   return (
@@ -34,9 +38,16 @@ const Content = () => {
               type="email"
               placeholder="Email address"
               aria-label="Enter Email Address"
+              value={ email }
+              onChange={event=>handleChange(event)}
             />
-            <button className="w-80 h-12 bg-green rounded-full mt-4 text-sm border-0 font-bold text-blue-dark md:absolute md:left-64 md:top-1 md:m-0 md:h-13 md:w-39 hover:bg-green-light" type="submit">Request Access</button>
-            <p className="absolute font-bold text-red -top-8 left-12">Oops! Please check your email.</p>
+            <button 
+              className="w-80 h-12 bg-green rounded-full mt-4 text-sm border-0 font-bold text-blue-dark md:absolute md:left-64 md:top-1 md:m-0 md:h-13 md:w-39 hover:bg-green-light" type="submit"
+              onClick={event => handleSubmit(event)}
+            >
+              Request Access
+            </button>
+            {inError && <p className="absolute font-bold text-red -top-8 left-12">Oops! Please check your email.</p>}
             {/*!ToastContainer />*/}
           </form>  
         </div>    
